@@ -1,0 +1,525 @@
+/* Guia de Locais e Eventos — folha de estilos */
+
+/* Cores usadas no site (mesmos valores de antes, agora num lugar só) */
+:root {
+  --azul-escuro: #216a9e;
+  --azul: #2980b9;
+  --azul-claro: #3498db;
+  --destaque: #f1c40f;
+  --fundo-lateral: #f0f4f8;
+  --fundo-suave: #eaf1f7;
+  --borda: #ddd;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Imagens nunca passam da largura da coluna onde estão */
+img, svg, picture {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Contorno amarelo para quem navega com o teclado */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--destaque);
+  outline-offset: 3px;
+}
+
+/* ---------- Estrutura da página ---------- */
+
+body {
+  font-family: system-ui, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  display: grid;
+  grid-template-areas:
+    "topo"
+    "conteudo"
+    "lado"
+    "rodape";
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+}
+
+/* Em telas maiores, a lateral passa para o lado esquerdo */
+@media (min-width: 700px) {
+  body {
+    grid-template-areas:
+      "topo topo"
+      "lado conteudo"
+      "rodape rodape";
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+}
+
+/* ---------- Cabeçalho e menu ---------- */
+
+.cabecalho {
+  grid-area: topo;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  background: var(--azul-escuro);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.titulo {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.menu-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+/* Altura mínima de 44px para o dedo acertar o link (celular e totem) */
+.menu-lista a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.25rem 0.75rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.menu-lista a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.menu-lista .ativo {
+  border-bottom: 3px solid var(--destaque);
+  border-radius: 0;
+}
+
+/* ---------- Barra lateral ---------- */
+
+.lateral {
+  grid-area: lado;
+  background: var(--fundo-lateral);
+  padding: 1.5rem 1rem;
+}
+
+.lateral-titulo {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--azul-escuro);
+  margin-bottom: 0.75rem;
+}
+
+.lateral-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Mesma altura mínima de toque do menu de cima */
+.lateral-lista a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.2rem 0.5rem;
+  color: var(--azul);
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.lateral-lista a:hover {
+  background: #dde7f0;
+}
+
+/* No celular a lista vira uma fileira que quebra linha */
+@media (max-width: 699px) {
+  .lateral-lista {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+/* ---------- Destaque (hero) ---------- */
+
+main {
+  grid-area: conteudo;
+}
+
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 35vh;
+  background: #f8f9fa;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* O título cresce com a largura da tela: de 1.5rem até 2.5rem */
+.hero h1 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  margin-bottom: 0.5rem;
+  word-break: break-word; /* palavra comprida não estoura a tela */
+}
+
+.hero-foto {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+@media (min-width: 700px) {
+  .hero {
+    min-height: 50vh;
+  }
+}
+
+/* ---------- Lista de locais ---------- */
+
+.locais {
+  padding: 1rem 2rem 2rem;
+}
+
+.categoria + .categoria {
+  margin-top: 1.5rem;
+}
+
+.categoria-titulo {
+  color: var(--azul-escuro);
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.card h4 {
+  color: var(--azul-claro);
+  margin: 1rem 1rem 0.5rem;
+}
+
+.card p {
+  margin: 0 1rem 1rem;
+}
+
+/* Card que leva para a página do local */
+.card.com-link {
+  padding: 0;
+}
+
+.card.com-link a {
+  display: block;
+  padding: 0 0 0.75rem;
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+}
+
+.card.com-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+}
+
+.card.com-link a:hover h4 {
+  text-decoration: underline;
+}
+
+.card-cta {
+  margin: 0.5rem 0.75rem 0;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--azul-escuro);
+}
+
+/* ---------- Agenda ---------- */
+
+.agenda {
+  padding: 0 2rem 2rem;
+}
+
+.agenda-titulo {
+  font-size: 1.1rem;
+  color: var(--azul-escuro);
+  margin-bottom: 0.75rem;
+}
+
+.agenda-lista {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.5rem;
+}
+
+.agenda-item {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-left: 4px solid var(--azul-escuro);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+}
+
+.agenda-item time {
+  font-weight: 700;
+  color: var(--azul-escuro);
+  margin-right: 0.5rem;
+}
+
+.agenda-item span {
+  color: #666;
+}
+
+/* ---------- Rodapé ---------- */
+
+.rodape {
+  grid-area: rodape;
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.rodape-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1.5rem;
+  margin-top: 0.75rem;
+}
+
+/* Azul bem claro para ter contraste no fundo escuro, e área de toque maior */
+.rodape-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  color: #d1e5f5;
+  border-radius: 6px;
+}
+
+.rodape-links a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Página do local (parque-centenario.html) ---------- */
+
+.pagina-local {
+  max-width: 60rem;
+  margin: 0 auto;
+  grid-template-areas:
+    "topo"
+    "conteudo"
+    "rodape";
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.pagina-local .cabecalho {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.pagina-local .menu-lista {
+  justify-content: center;
+}
+
+.pagina-local main {
+  padding: 0 1rem 1rem;
+}
+
+/* Submenu com as seções da página */
+.nav-local {
+  display: flex;
+  justify-content: center;
+  margin: 0.4rem auto 1rem;
+  background-color: var(--fundo-suave);
+  border-radius: 8px;
+}
+
+.nav-local ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem 0.8rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.nav-local a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  color: var(--azul);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.nav-local .volta a {
+  font-weight: bold;
+}
+
+.nav-local a:hover {
+  background-color: rgba(41, 128, 185, 0.15);
+  text-decoration: none;
+}
+
+/* Título do local também acompanha a largura da tela */
+.local-titulo {
+  margin: 0.4rem 0 0.6rem;
+  text-align: center;
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  color: var(--azul);
+}
+
+.local-foto {
+  margin: 0.5rem 0 1rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid var(--azul);
+}
+
+.local-foto img {
+  display: block;
+  width: 100%;
+}
+
+.local-foto figcaption {
+  padding: 0.5rem 0.8rem;
+  background: var(--fundo-suave);
+  color: #555;
+  font-size: 0.85rem;
+}
+
+.secao {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.secao h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1.25rem;
+  color: var(--azul);
+}
+
+.secao blockquote {
+  margin: 0.6rem 0 0;
+  padding-left: 0.8rem;
+  border-left: 4px solid var(--azul);
+  color: #555;
+}
+
+/* Tabela: se não couber, rola só ela, não a página inteira */
+.rola-x {
+  overflow-x: auto;
+}
+
+.tabela-info {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 26rem;
+}
+
+.tabela-info caption {
+  text-align: left;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.4rem;
+}
+
+.tabela-info th,
+.tabela-info td {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.tabela-info th {
+  background-color: var(--azul);
+  color: #fff;
+}
+
+.tabela-info tfoot td {
+  font-size: 0.85rem;
+  color: #777;
+  text-align: center;
+}
+
+.tabela-info tbody tr:nth-child(even) {
+  background: #f7f7f7;
+}
+
+/* Links de contato em formato de botão, com altura mínima de toque */
+.links-contato {
+  padding: 0;
+  list-style: none;
+}
+
+.links-contato li {
+  margin: 0.4rem 0;
+}
+
+.links-contato a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: var(--azul);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.links-contato a::after {
+  content: " →";
+}
+
+.links-contato a:hover {
+  background: var(--fundo-suave);
+  text-decoration: none;
+}
